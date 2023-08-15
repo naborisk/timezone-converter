@@ -2,7 +2,6 @@
   import TimeZone from './lib/TimeZone.svelte'
 
   let currentTime = new Date()
-
   let timeZones = ['loading...']
 
   ;(async () => {
@@ -46,8 +45,8 @@
     title="Current Time"
     {result}
   >
-    <button class="rounded bg-red-500 p-2" on:click={checkLocation}
-      >Check Location
+    <button class="rounded bg-blue-500 p-2" on:click={checkLocation}>
+    Get Current Location
     </button>
   </TimeZone>
   <div class="text-4xl">↓</div>
