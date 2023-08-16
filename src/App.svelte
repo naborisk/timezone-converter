@@ -5,11 +5,9 @@
   let timeZones = ['loading...']
 
   ;(async () => {
-    // timeZones = await fetch('http://worldtimeapi.org/api/timezone').then(res =>
-    //   res.json()
-    // )
-  timeZones = await fetch('http://worldtimeapi.org/api/timezone')
-    .then(res => res.json())
+    timeZones = await fetch('http://worldtimeapi.org/api/timezone').then(res =>
+      res.json()
+    )
   })()
 
   let result: any = {
@@ -28,6 +26,7 @@
     currentTime = new Date()
   }, 1000)
 </script>
+
 {timeZones}
 
 <!-- WIP overlay, only visible in production -->
@@ -42,11 +41,7 @@
 <main
   class="bg-sky-900 text-white h-screen flex flex-col items-center justify-center"
 >
-  <TimeZone
-    dropdownData={timeZones}
-    {currentTime}
-    title="Current Time"
-  >
+  <TimeZone dropdownData={timeZones} {currentTime} title="Current Time">
     <button class="rounded bg-blue-500 p-2" on:click={checkLocation}>
       Get Current Location
     </button>
