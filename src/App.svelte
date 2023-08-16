@@ -5,9 +5,11 @@
   let timeZones = ['loading...']
 
   ;(async () => {
-    timeZones = await fetch('http://worldtimeapi.org/api/timezone').then(res =>
-      res.json()
-    )
+    // timeZones = await fetch('http://worldtimeapi.org/api/timezone').then(res =>
+    //   res.json()
+    // )
+  timeZones = await fetch('http://worldtimeapi.org/api/timezone')
+    .then(res => res.json())
   })()
 
   let result: any = {
@@ -26,6 +28,7 @@
     currentTime = new Date()
   }, 1000)
 </script>
+{timeZones}
 
 <!-- WIP overlay, only visible in production -->
 {#if import.meta.env.PROD}
@@ -43,12 +46,16 @@
     dropdownData={timeZones}
     {currentTime}
     title="Current Time"
-    {result}
   >
     <button class="rounded bg-blue-500 p-2" on:click={checkLocation}>
-    Get Current Location
+      Get Current Location
     </button>
   </TimeZone>
   <div class="text-4xl">↓</div>
-  <TimeZone dropdownData={timeZones} {currentTime} title="Converted Time" />
+  <TimeZone
+    dropdownData={timeZones}
+    {currentTime}
+    title="Converted Time"
+    timeOffset={1}
+  />
 </main>

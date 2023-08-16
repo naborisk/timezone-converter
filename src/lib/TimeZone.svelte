@@ -5,6 +5,12 @@
   export let result: any = {
     timezone: 'Africa/Abidjan'
   }
+
+  export let timeOffset: number = 0
+
+  $: {
+    currentTime.setHours(currentTime.getHours() + timeOffset)
+  }
 </script>
 
 <div
@@ -13,6 +19,11 @@
   <div class="text-xl">
     {title}
   </div>
+  {#if timeOffset > 0}
+    <div class="text-xl">
+      Offset: {timeOffset}
+    </div>
+  {/if}
   <div class="text-xl">
     {currentTime.toLocaleTimeString()}
   </div>
