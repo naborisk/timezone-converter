@@ -27,8 +27,6 @@
   }, 1000)
 </script>
 
-{timeZones}
-
 <!-- WIP overlay, only visible in production -->
 {#if import.meta.env.PROD}
   <div class="h-screen w-screen absolute backdrop-blur">
