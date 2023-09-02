@@ -6,7 +6,6 @@
 
   export let currentTimezone = 'Africa/Abidjan'
   let currentTimeString: string
-  let currentTimezoneSearch: string
 
   let filteredTimezones: string[] = []
 
@@ -60,7 +59,6 @@
               on:click={() => {
                 console.log('hey')
                 currentTimezone = t
-                currentTimezoneSearch = t
                 showDropdown = false
               }}>{t}</button
             >
