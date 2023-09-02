@@ -2,14 +2,15 @@
   export let dropdownData: string[]
   export let currentTime: Date
   export let title: string = 'TimeZone'
-  export let result: any = {
-    timezone: 'Africa/Abidjan'
-  }
+  export let editable: boolean = false
 
-  export let timeOffset: number = 0
+  export let currentTimezone = 'Africa/Abidjan'
+  let currentTimeString: string
 
   $: {
-    currentTime.setHours(currentTime.getHours() + timeOffset)
+    currentTimeString = currentTime.toLocaleTimeString('en-US', {
+      timeZone: currentTimezone
+    })
   }
 </script>
 
@@ -19,23 +20,22 @@
   <div class="text-xl">
     {title}
   </div>
-  {#if timeOffset > 0}
-    <div class="text-xl">
-      Offset: {timeOffset}
-    </div>
-  {/if}
   <div class="text-xl">
-    {currentTime.toLocaleTimeString()}
+    {currentTimeString}
   </div>
-  <select
-    class="w-64 cursor-pointer rounded bg-gray-500 p-2"
-    name="timezone"
-    value={result.timezone}
-    id=""
-  >
-    {#each dropdownData as item}
-      <option value={item}>{item}</option>
-    {/each}
-  </select>
+  {#if editable}
+    <select
+      class="w-64 cursor-pointer rounded bg-gray-500 p-2"
+      name="timezone"
+      bind:value={currentTimezone}
+      id=""
+    >
+      {#each dropdownData as item}
+        <option value={item}>{item}</option>
+      {/each}
+    </select>
+  {:else}
+    <div>{currentTimezone}</div>
+  {/if}
   <slot />
 </div>
