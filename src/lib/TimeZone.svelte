@@ -52,7 +52,7 @@
       />
       {#if showDropdown}
         <div
-          class="bg-gray-500 absolute max-h-60 top-12 rounded flex flex-col overflow-auto"
+          class="bg-gray-500 absolute max-h-60 top-12 rounded flex flex-col overflow-auto scrollbar-none"
         >
           {#each filteredTimezones as t}
             <button
