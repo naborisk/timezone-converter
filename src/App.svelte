@@ -10,7 +10,7 @@
     )
   })()
 
-  $: setInterval(() => {
+  setInterval(() => {
     currentTime = new Date()
   }, 1000)
 </script>

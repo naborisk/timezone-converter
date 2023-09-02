@@ -1,10 +1,13 @@
 <script lang="ts">
+  import { fly } from 'svelte/transition'
+  import { cubicOut } from 'svelte/easing'
+
   export let dropdownData: string[]
   export let currentTime: Date
   export let title: string = 'TimeZone'
   export let editable: boolean = false
 
-  export let currentTimezone = 'Africa/Abidjan'
+  export let currentTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
   let currentTimeString: string
 
   let filteredTimezones: string[] = []
@@ -19,6 +22,12 @@
             return item.toLowerCase().includes(currentTimezone.toLowerCase())
           })
         : [])
+  }
+
+  $: {
+    if (filteredTimezones.length === 0) {
+      showDropdown = false
+    }
   }
 
   // update current time
@@ -51,6 +60,7 @@
       />
       {#if showDropdown}
         <div
+          transition:fly={{ duration: 70, easing: cubicOut, y: 20 }}
           class="bg-gray-500 absolute max-h-60 top-12 rounded flex flex-col overflow-auto scrollbar-none"
         >
           {#each filteredTimezones as t}
