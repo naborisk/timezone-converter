@@ -6,11 +6,31 @@
 
   export let currentTimezone = 'Africa/Abidjan'
   let currentTimeString: string
+  let currentTimezoneSearch: string
 
+  let filteredTimezones: string[] = []
+
+  let showDropdown = false
+
+  const filterTimezone = () => {
+    showDropdown = true
+    return (filteredTimezones =
+      currentTimezone !== ''
+        ? dropdownData.filter(item => {
+            return item.toLowerCase().includes(currentTimezone.toLowerCase())
+          })
+        : [])
+  }
+
+  // update current time
   $: {
-    currentTimeString = currentTime.toLocaleTimeString('en-US', {
-      timeZone: currentTimezone
-    })
+    if (dropdownData.includes(currentTimezone)) {
+      currentTimeString = currentTime.toLocaleTimeString('en-US', {
+        timeZone: currentTimezone
+      })
+    } else {
+      currentTimeString = currentTime.toLocaleTimeString('en-US')
+    }
   }
 </script>
 
@@ -24,18 +44,32 @@
     {currentTimeString}
   </div>
   {#if editable}
-    <select
-      class="w-64 cursor-pointer rounded bg-gray-500 p-2"
-      name="timezone"
-      bind:value={currentTimezone}
-      id=""
-    >
-      {#each dropdownData as item}
-        <option value={item}>{item}</option>
-      {/each}
-    </select>
+    <div class="flex flex-col gap-2 relative">
+      <input
+        class="bg-gray-500 w-64 p-2 rounded hover:bg-gray-600 focus:bg-gray-600 transition outline-none"
+        bind:value={currentTimezone}
+        on:input={filterTimezone}
+      />
+      {#if showDropdown}
+        <div
+          class="bg-gray-500 absolute max-h-60 top-12 rounded flex flex-col overflow-auto"
+        >
+          {#each filteredTimezones as t}
+            <button
+              class="p-2 w-64 cursor-pointer hover:bg-gray-600 transition"
+              on:click={() => {
+                console.log('hey')
+                currentTimezone = t
+                currentTimezoneSearch = t
+                showDropdown = false
+              }}>{t}</button
+            >
+          {/each}
+        </div>
+      {/if}
+    </div>
   {:else}
-    <div>{currentTimezone}</div>
+    <div class="text-lg">{currentTimezone}</div>
   {/if}
   <slot />
 </div>
