@@ -15,15 +15,6 @@
   }, 1000)
 </script>
 
-<!-- WIP overlay, only visible in production -->
-<!-- {#if import.meta.env.PROD} -->
-<!--   <div class="h-screen w-screen absolute backdrop-blur"> -->
-<!--     <div class="flex h-screen"> -->
-<!--       <div class="mx-auto my-auto text-5xl text-white">WIP</div> -->
-<!--     </div> -->
-<!--   </div> -->
-<!-- {/if} -->
-
 <main
   class="bg-sky-900 text-white h-screen flex flex-col items-center justify-center"
 >
