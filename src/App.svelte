@@ -16,7 +16,7 @@
 </script>
 
 <main
-  class="bg-sky-900 text-white h-screen flex flex-col items-center justify-center"
+  class="bg-sky-900 text-white h-[100dvh] flex flex-col items-center justify-center"
 >
   <TimeZone
     dropdownData={timeZones}
