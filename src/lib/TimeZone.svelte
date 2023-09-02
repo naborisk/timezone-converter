@@ -43,7 +43,7 @@
 </script>
 
 <div
-  class="w-96 h-64 flex flex-col rounded justify-center items-center bg-gray-700 shadow-md gap-2"
+  class="w-96 h-64 flex flex-col rounded justify-center items-center bg-gray-700 gap-2"
 >
   <div class="text-xl">
     {title}
