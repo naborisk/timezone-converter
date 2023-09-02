@@ -2,24 +2,29 @@
   import TimeZone from './lib/TimeZone.svelte'
   import Window from './lib/Window.svelte'
 
-  let showDraggable = false
-
   let currentTime = new Date()
   let timeZones = ['loading...']
 
   interface Window {
     title: string
+    id: number
     x: number
     y: number
+    data?: any
   }
 
   let windowList: Window[] = [
     {
+      id: 0,
       title: 'Timezone',
       x: 0,
       y: 0
     }
   ]
+
+  let closeWindow = (id: number) => {
+    windowList = windowList.filter(item => item.id !== id)
+  }
 
   ;(async () => {
     timeZones = await fetch('timezones.json').then(res => res.json())
@@ -49,26 +54,37 @@
 
   <button
     class="mt-5 bg-sky-800 px-3 py-1 rounded"
-    on:click={() => (showDraggable = !showDraggable)}>toggle</button
-  >
-
-  <button
-    class="mt-5 bg-sky-800 px-3 py-1 rounded"
     on:click={() => {
       windowList = [
         ...windowList,
         {
           title: 'Timezone',
-          x: windowList.at(-1).x + 20,
-          y: windowList.at(-1).y + 20
+          x: windowList.length * 20 + 10,
+          y: windowList.length * 20 + 10,
+          id: crypto.getRandomValues(new Uint32Array(1))[0]
         }
       ]
-    }}>add</button>
+    }}>add</button
+  >
 
-  {#each windowList as window}
+  {#each windowList as w}
     <Window
-      close={() => (windowList = windowList.filter(item => item !== window))}
-      title={window.title}
+      close={() => {
+        console.log(w.id)
+        windowList = windowList.filter(item => {
+          return item.id !== w.id
+        })
+      }}
+      on:mousedown={() => {
+      //move window to end of array
+      windowList = [
+        ...windowList.filter(item => item.id !== w.id),
+        w
+      ]
+      }}
+      title={w.title}
+      bind:x={w.x}
+      bind:y={w.y}
     >
       <TimeZone
         dropdownData={timeZones}
@@ -76,20 +92,7 @@
         title="Converted Time"
         editable={true}
       />
+      <!-- {`x: ${w.x} y: ${w.y} id: ${w.id}`} -->
     </Window>
   {/each}
-
-  {#if showDraggable}
-    <Window
-      close={() => (showDraggable = false)}
-      title="Timezone"
-    >
-      <TimeZone
-        dropdownData={timeZones}
-        {currentTime}
-        title="Converted Time"
-        editable={true}
-      />
-    </Window>
-  {/if}
 </main>

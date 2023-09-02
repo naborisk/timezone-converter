@@ -1,35 +1,36 @@
 <script lang="ts">
   import { cubicOut } from 'svelte/easing'
   import { tweened } from 'svelte/motion'
-  import { fly, scale } from 'svelte/transition'
+  import { scale } from 'svelte/transition'
 
   export let close: () => void
+
   export let title: string = 'Untitled Window'
   export let x: number = 0
   export let y: number = 0
 
   let moving = false
 
-  let l = x
-  let t = y
-
-  let left = tweened(l, {
+  let left = tweened(x, {
     duration: 200,
     easing: cubicOut
   })
 
-  let top = tweened(t, {
+  let top = tweened(y, {
     duration: 200,
     easing: cubicOut
   })
 
   $: {
-    $left = l
-    $top = t
+    $left = x
+    $top = y
   }
 </script>
 
 <div
+  role="menuitem"
+  tabindex="0"
+  on:mousedown
   style={`left: ${$left}px; top: ${$top}px;`}
   class="flex flex-col absolute shadow-gray-800 shadow-md min-w-[150px] min-h-[200px]"
   transition:scale={{duration: 300, start: 0.9, easing: cubicOut}}
@@ -45,7 +46,6 @@
   </div>
   <div class="flex-grow bg-gray-800">
     <slot></slot>
-
   </div>
 </div>
 
@@ -53,8 +53,8 @@
   on:mouseup={() => (moving = false)}
   on:mousemove={e => {
     if (moving) {
-      l += e.movementX
-      t += e.movementY
+      x += e.movementX
+      y += e.movementY
     }
   }}
 />
