@@ -22,8 +22,11 @@
     }
   ]
 
-  let closeWindow = (id: number) => {
-    windowList = windowList.filter(item => item.id !== id)
+  const moveWindowToTop = (w:Window) => {
+    windowList = [
+      ...windowList.filter(item => item.id !== w.id),
+      w
+    ]
   }
 
   ;(async () => {
@@ -71,17 +74,12 @@
     <Window
       close={() => {
         console.log(w.id)
+        moveWindowToTop(w)
         windowList = windowList.filter(item => {
           return item.id !== w.id
         })
       }}
-      on:mousedown={() => {
-      //move window to end of array
-      windowList = [
-        ...windowList.filter(item => item.id !== w.id),
-        w
-      ]
-      }}
+      on:mousedown={() => moveWindowToTop(w)}
       title={w.title}
       bind:x={w.x}
       bind:y={w.y}
@@ -92,7 +90,7 @@
         title="Converted Time"
         editable={true}
       />
-      <!-- {`x: ${w.x} y: ${w.y} id: ${w.id}`} -->
+      {`x: ${w.x} y: ${w.y} id: ${w.id}`}
     </Window>
   {/each}
 </main>

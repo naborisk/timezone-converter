@@ -11,27 +11,30 @@
 
   let moving = false
 
-  let left = tweened(x, {
-    duration: 200,
-    easing: cubicOut
-  })
+  // let left = tweened(x, {
+  //   duration: 200,
+  //   easing: cubicOut
+  // })
+  //
+  // let top = tweened(y, {
+  //   duration: 200,
+  //   easing: cubicOut
+  // })
 
-  let top = tweened(y, {
-    duration: 200,
-    easing: cubicOut
-  })
-
-  $: {
-    $left = x
-    $top = y
-  }
+  let left = x
+  let top = y
+  //
+  // $: {
+  //   $left = x
+  //   $top = y
+  // }
 </script>
 
 <div
   role="menuitem"
   tabindex="0"
   on:mousedown
-  style={`left: ${$left}px; top: ${$top}px;`}
+  style={`left: ${x}px; top: ${y}px;`}
   class="flex flex-col absolute shadow-gray-800 shadow-md min-w-[150px] min-h-[200px]"
   transition:scale={{duration: 300, start: 0.9, easing: cubicOut}}
 >
